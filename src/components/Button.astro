@@ -1,0 +1,5 @@
+---
+interface Props { href: string; secondary?: boolean; download?: boolean; class?: string }
+const {href, secondary, download, class: className} = Astro.props;
+---
+<a href={href} class:list={['button', secondary && 'button-secondary', className]} download={download}><slot /></a>

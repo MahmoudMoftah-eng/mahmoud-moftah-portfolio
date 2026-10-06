@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import SystemDiagram from '../components/SystemDiagram.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import {projects} from '../data/projects';
+import {experience,skills} from '../data/experience';
+import {site, url} from '../data/site';
+---
+<BaseLayout>
+<section class="shell hero">
+  <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> MECHATRONICS ENGINEERING STUDENT</p><p class="hero-name">Mahmoud Moftah Mohamed</p><h1>Embedded systems.<br/>Control.<br/><span>Autonomous machines.</span></h1><p class="hero-description">Developing embedded firmware, control systems and autonomous UAV software. From STM32 control loops to real-world TEKNOFEST projects.</p><div class="hero-actions"><Button href={url('projects/')}>View projects</Button><Button href={url(site.cvAvailable ? site.cv : 'cv/')} secondary download={site.cvAvailable}><Icon name="download" size={17}/>Download CV</Button></div><SocialLinks/></div>
+  <div class="hero-visual"><div class="visual-kicker"><span>ENGINEERING AT THE INTERSECTION</span><span>01 / 03</span></div><SystemDiagram/><div class="visual-note"><span class="tiny-square"></span><p>Software that interacts<br/>with the physical world.</p></div></div>
+</section>
+<div class="shell hero-foot"><span><Icon name="pin" size={15}/> Sakarya, Türkiye</span><span>Sakarya University of Applied Sciences</span><span>Expected graduation <strong>July 2027</strong></span></div>
+<section class="shell section" id="projects"><SectionHeading index="01" label="SELECTED WORK" title="Engineering in practice." href={url('projects/')} linkLabel="All projects"/><div class="project-grid">{projects.map((p,i)=><ProjectCard project={p} number={i+1}/>)}</div></section>
+<section class="shell section" id="focus"><SectionHeading index="02" label="ENGINEERING FOCUS" title="A connected set of skills."/><div class="skills-grid">{skills.map(skill=><article class="skill-group"><div class="skill-icon"><Icon name={skill.icon} size={23}/></div><h3>{skill.name}</h3><p class="skill-note">{skill.note}</p><p class="skill-list">{skill.items.join(' · ')}</p>{skill.developing && <p class="skill-learning">{skill.developing}</p>}</article>)}</div></section>
+<section class="shell section" id="experience"><SectionHeading index="03" label="EXPERIENCE" title="Built with a team."/>{experience.map(item=><ExperienceItem item={item}/>)}</section>
+<section class="shell section" id="current-work"><SectionHeading index="04" label="CURRENTLY BUILDING" title="The next system."/><article class="current-project"><div><span class="work-status"><span class="status-dot"></span>In Development — Graduation Project</span><h3>Modular Embedded Flight-Control<br class="desktop-break"/> and Autonomous Navigation Platform for UAVs</h3><p>Engineering a modular embedded platform with testability and system integration at its core. The scope includes flight control, sensor interfaces, telemetry, safety logic and navigation.</p><p class="development-note">These are development goals; implementation and validation are ongoing.</p></div><div class="current-scope"><span class="small-label">PLANNED ENGINEERING SCOPE</span><ul><li>Embedded control & sensors</li><li>Navigation & guidance</li><li>Telemetry & safety logic</li><li>Integration & testability</li></ul></div></article></section>
+<section class="shell section" id="education"><SectionHeading index="05" label="EDUCATION" title="The foundation."/><div class="education-row"><div><h3>B.Sc. Mechatronics Engineering</h3><p>Sakarya University of Applied Sciences — SUBÜ</p><p class="education-topics">Embedded Systems · Control Systems · Robotics · Electronics<br/>Signals & Systems · Microcontrollers · Simulation</p></div><div class="education-meta"><span class="small-label">EXPECTED GRADUATION</span><strong>July 2027</strong><p>Sakarya, Türkiye</p></div></div></section>
+<ContactCTA/>
+</BaseLayout>

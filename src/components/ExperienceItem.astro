@@ -1,0 +1,7 @@
+---
+import {url} from '../data/site';
+import {experience} from '../data/experience';
+interface Props { item: typeof experience[number] }
+const {item} = Astro.props;
+---
+<article class="experience-item"><div class="experience-date"><span class="timeline-dot"></span><p>{item.period}</p><span>{item.location}</span></div><div class="experience-content"><h3>{item.role}</h3><p class="team-name">{item.team}</p><p>{item.summary}</p><div class="experience-links">{item.links.map(link => <a class="text-link" href={url(`projects/${link.slug}/`)}>{link.label}</a>)}</div></div></article>

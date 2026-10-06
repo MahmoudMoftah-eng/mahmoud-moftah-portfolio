@@ -1,0 +1,6 @@
+---
+import {site} from '../data/site';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+---
+<section class="shell contact-cta"><div><p class="eyebrow">LET’S CONNECT</p><h2>Engineering starts<br/>with a conversation.</h2><p>Interested in embedded systems, UAVs or autonomous systems?<br class="desktop-break"/> Feel free to get in touch.</p></div><Button href={`mailto:${site.email}`}><Icon name="mail" size={18}/>Get in touch</Button></section>

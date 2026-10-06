@@ -1,0 +1,7 @@
+---
+import type {ProjectMedia} from '../data/projects';
+import {url} from '../data/site';
+interface Props { media:ProjectMedia; directory:string }
+const {media} = Astro.props;
+---
+<figure class="media-item">{media.src ? (media.kind === 'video' ? <video controls preload="metadata" src={url(media.src)} aria-label={media.label}><track kind="captions"/></video> : media.kind === 'image' ? <img src={url(media.src)} alt={media.alt || media.label} loading="lazy" width="960" height="600"/> : <a class="button button-secondary" href={url(media.src)} download>Download {media.label}</a>) : <div class="media-placeholder"><span class="placeholder-plus" aria-hidden="true">+</span><strong>{media.label}</strong><span>TODO · {media.kind === 'video' ? 'Video' : media.kind === 'document' ? 'Test records' : 'Original media'} to be added</span></div>}<figcaption>{media.src ? media.label : `Reserved for verified project ${media.kind === 'document' ? 'records' : 'media'}`}</figcaption></figure>

@@ -1,0 +1,17 @@
+---
+interface Props { name: string; size?: number }
+const { name, size = 20 } = Astro.props;
+const paths: Record<string, string> = {
+  download: 'M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5',
+  mail: 'M3 5h18v14H3zM3 6l9 7 9-7',
+  github: 'M9 19c-4 1-4-2-6-2m12 5v-4c0-1 .1-2-1-3 3 0 6-1 6-5 0-1-.4-3-1-3 .2-1 .2-2-.2-3 0 0-1 0-3 1a12 12 0 0 0-7 0C7 4 6 4 6 4c-.4 1-.4 2-.2 3-1 1-1 2-1 3 0 4 3 5 6 5-1 1-1 2-1 3v4',
+  linkedin: 'M4 9v11M4 4v.1M9 20V9h5v2c1-3 6-3 6 2v7M14 11v9',
+  chip: 'M6 6h12v12H6zM9 9h6v6H9zM9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4M18 9h4m-4 6h4',
+  control: 'M3 12h4l3-7 4 14 3-7h4',
+  robotics: 'M12 3v4M5 7h14v12H5zM8 11h.1M16 11h.1M9 15h6M2 10v6m20-6v6',
+  code: 'm8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18',
+  pin: 'M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0zM14 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0',
+  circuit: 'M3 5h6v6h6v8h6M3 19h6v-4M15 5h6M3 3v4m18 10v4',
+};
+---
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name] || paths.chip} /></svg>

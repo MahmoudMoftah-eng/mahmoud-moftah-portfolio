@@ -1,0 +1,8 @@
+---
+import type {Project} from '../data/projects';
+import {url} from '../data/site';
+import TechBadge from './TechBadge.astro';
+interface Props { project:Project }
+const {project:p} = Astro.props;
+---
+<header class="shell page-hero project-hero"><nav class="breadcrumb" aria-label="Breadcrumb"><a href={url('projects/')}>Projects</a><span>/</span><span>{p.shortTitle}</span></nav><p class="eyebrow">{p.category}</p><h1>{p.title}</h1><p class="page-intro">{p.summary}</p><div class="project-facts"><div><span>MY ROLE</span><strong>{p.role}</strong></div><div><span>CONTEXT</span><strong>{p.context}</strong></div><div><span>PERIOD</span><strong>{p.period}</strong></div></div><div class="badges">{p.technologies.slice(0,6).map(label => <TechBadge label={label}/>)}</div></header>

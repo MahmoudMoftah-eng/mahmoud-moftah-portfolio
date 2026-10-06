@@ -1,0 +1,6 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import {url} from '../data/site';
+---
+<BaseLayout title="Page not found | Mahmoud Moftah"><section class="shell page-hero cv-page"><p class="eyebrow">404 / PAGE NOT FOUND</p><h1>This page isn’t here.</h1><p class="page-intro">Return to the portfolio or explore the project case studies.</p><Button href={url()}>Back to home</Button></section></BaseLayout>

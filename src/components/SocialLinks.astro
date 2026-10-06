@@ -1,0 +1,5 @@
+---
+import {site} from '../data/site';
+import Icon from './Icon.astro';
+---
+<div class="hero-socials">{[{name:'GitHub',icon:'github',href:site.github},{name:'LinkedIn',icon:'linkedin',href:site.linkedin}].map(s => s.href ? <a href={s.href} target="_blank" rel="noopener noreferrer"><Icon name={s.icon} size={16}/>{s.name}<span class="sr-only"> (opens in a new tab)</span></a> : <span title={`${s.name} profile URL to be added`}><Icon name={s.icon} size={16}/>{s.name}<small>TODO</small></span>)}<a href={`mailto:${site.email}`}><Icon name="mail" size={16}/>Email</a></div>

@@ -1,0 +1,13 @@
+---
+interface Props { compact?: boolean; kind?: 'guidance' | 'control' | 'mission' | 'simulation' }
+const {compact = false, kind = 'guidance'} = Astro.props;
+const labels = { guidance: ['Telemetry', 'Guidance', 'Flight control', 'Actuation'], control: ['Position', 'Position PID', 'Velocity PID', 'Motor'], mission: ['GPS references', 'Waypoints', 'MAVLink', 'Flight controller'], simulation: ['Robot model', 'Gazebo', 'Sensors / TF', 'Navigation'] }[kind];
+---
+<div class:list={['system-diagram', compact && 'compact']}>
+  <div class="diagram-top"><span>{compact ? 'SYSTEM OVERVIEW' : 'FROM REFERENCE TO RESPONSE'}</span><span class="diagram-cross">+</span></div>
+  <div class="diagram-flow" aria-label={`Conceptual system flow: ${labels.join(', ')}`}>
+    {labels.map((label, i) => <><div class:list={['diagram-node', i === 1 && 'accent-node']}><span class="node-index">0{i + 1}</span><span>{label}</span>{!compact && <span class="node-code">{['INPUT', 'COMPUTE', 'REGULATE', 'OUTPUT'][i]}</span>}</div>{i < 3 && <span class="signal-line" aria-hidden="true"></span>}</>)}
+  </div>
+  <div class="feedback-line"><span>FEEDBACK</span></div>
+  <div class="diagram-bottom"><span>Sense · Compute · Control</span><span>CONCEPTUAL DIAGRAM</span></div>
+</div>

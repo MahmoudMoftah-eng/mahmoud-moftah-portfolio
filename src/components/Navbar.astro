@@ -1,0 +1,23 @@
+---
+import { site, url } from '../data/site';
+import Icon from './Icon.astro';
+const links = [{label:'Projects', href:'projects/'}, {label:'Experience', href:'#experience'}, {label:'About', href:'about/'}, {label:'Contact', href:'contact/'}];
+---
+<header class="site-header">
+  <nav class="shell nav" aria-label="Main navigation">
+    <a class="brand" href={url()} aria-label="Mahmoud Moftah home"><span class="brand-mark">m<span>.</span></span><span>Mahmoud Moftah<span class="brand-caption">ENGINEERING PORTFOLIO</span></span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation"><span></span><span></span></button>
+    <div class="nav-links" id="nav-links">
+      {links.map(link => <a href={url(link.href)} aria-current={Astro.url.pathname === url(link.href) ? 'page' : undefined}>{link.label}</a>)}
+      <a class="nav-cv" href={url(site.cvAvailable ? site.cv : 'cv/')} download={site.cvAvailable}><Icon name="download" size={16} /> CV</a>
+    </div>
+  </nav>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const links = document.querySelector<HTMLElement>('.nav-links');
+  const close = () => { toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Open navigation'); links?.classList.remove('is-open'); };
+  toggle?.addEventListener('click', () => {const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); links?.classList.toggle('is-open', open);});
+  links?.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { close(); toggle.focus(); } });
+</script>

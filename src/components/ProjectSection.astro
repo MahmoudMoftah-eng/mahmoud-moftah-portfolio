@@ -1,0 +1,6 @@
+---
+import {sectionId, type ProjectSectionData} from '../data/projects';
+interface Props { section:ProjectSectionData }
+const {section} = Astro.props;
+---
+<section class="case-section" id={sectionId(section.title)}><h2>{section.title}</h2>{section.paragraphs?.map(p => <p>{p}</p>)}{section.items && <ul>{section.items.map(item => <li>{item}</li>)}</ul>}<slot/></section>

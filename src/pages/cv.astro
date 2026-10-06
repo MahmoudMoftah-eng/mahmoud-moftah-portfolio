@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import {site,url} from '../data/site';
+---
+<BaseLayout title="CV | Mahmoud Moftah" description="CV and engineering background of Mahmoud Moftah, a Mechatronics Engineering student focused on embedded systems and autonomous machines."><section class="shell page-hero cv-page"><p class="eyebrow">CURRICULUM VITAE</p><h1>Engineering background.</h1><p class="page-intro">Mechatronics Engineering student at SUBÜ, with practical experience in embedded firmware, guidance and control, UAV mission software and robotics simulation.</p>{site.cvAvailable?<Button href={url(site.cv)} download><Icon name="download"/>Download CV</Button>:<div class="cv-notice"><p class="eyebrow">TODO · CV TO BE ADDED</p><h2>The PDF will be available here.</h2><p>In the meantime, you can explore my project case studies or request my CV by email.</p><div class="hero-actions"><Button href={`mailto:${site.email}?subject=CV%20request`}>Request CV by email</Button><Button href={url('projects/')} secondary>View projects</Button></div></div>}</section></BaseLayout>
