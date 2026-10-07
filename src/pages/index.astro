@@ -23,6 +23,10 @@ const selectedProjects = projects
       period: '',
       summary: 'Embedded C firmware for STM32 cascade position–speed control, with pre-hardware MATLAB / Simulink evaluation of the control structure.',
     };
+    if (project.slug === 'yutpa-uav') return {
+      ...project,
+      heroImage: 'projects/yutpa/yutpa-field-test.jpg',
+    };
     return {...project};
   });
 
@@ -80,7 +84,8 @@ const homepageSkills = [
       <div class="project-grid">
         {selectedProjects.map((project, i) => (
           <ProjectCard project={project} number={i + 1} showDiagram={false}
-            imageAlt={project.slug === 'abra-hunter' ? 'ABRA Hunter UAV on the ground during field testing at sunset.' : undefined}/>
+            imageAlt={project.slug === 'abra-hunter' ? 'ABRA Hunter UAV on the ground during field testing at sunset.' : project.slug === 'yutpa-uav' ? 'YUTPA UAV during field testing.' : undefined}
+            imageClass={project.slug === 'yutpa-uav' ? 'project-image-yutpa' : undefined}/>
         ))}
       </div>
     </section>
@@ -148,6 +153,7 @@ const homepageSkills = [
   .homepage :global(.project-card:first-child) { grid-row: span 2; }
   .homepage :global(.secondary-card .project-summary) { min-height: 0; }
   .homepage :global(.project-image) { height: auto; aspect-ratio: 2 / 1; }
+  .homepage :global(.project-image-yutpa) { aspect-ratio: 4 / 3; object-position: center 50%; }
   .homepage :global(.skills-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; }
   .homepage :global(.skill-list) { margin-top: 10px; line-height: 1.75; }
   .education-current { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; }
