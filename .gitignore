@@ -5,3 +5,8 @@ dist/
 .env
 *.log
 qa/
+
+# Internal project files
+PORTFOLIO_CONTEXT.md
+reference/
+TODO.md

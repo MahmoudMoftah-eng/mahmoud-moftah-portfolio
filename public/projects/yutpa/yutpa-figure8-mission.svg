@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">YUTPA dynamic horizontal figure-eight mission</title>
+  <desc id="desc">Two GPS pole coordinates define a baseline. Perpendicular-vector geometry generates horizontal figure-eight waypoints dynamically. The mission is uploaded through MAVLink, followed by AUTO takeoff, two complete figure-eight loops, return to the launch position and landing.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07131f"/><stop offset="1" stop-color="#0d2235"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#000" flood-opacity=".3"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5bd7e0"/></marker>
+    <style>
+      .title{font:700 38px Arial,sans-serif;fill:#f3f8fb}.subtitle{font:400 18px Arial,sans-serif;fill:#9db2c3}.eyebrow{font:700 14px Arial,sans-serif;fill:#59d5e0;letter-spacing:2px}.panel-title{font:700 22px Arial,sans-serif;fill:#f4f9fc}.copy{font:400 16px Arial,sans-serif;fill:#bdcad5}.small{font:400 14px Arial,sans-serif;fill:#9fb4c3}.label{font:700 15px Arial,sans-serif;fill:#7ce0e7}.step-num{font:700 15px Arial,sans-serif;fill:#07131f}.step-title{font:700 18px Arial,sans-serif;fill:#f4f9fc}.step-copy{font:400 14px Arial,sans-serif;fill:#b9c9d4}.route{fill:none;stroke:#61dbe3;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.guide{fill:none;stroke:#547386;stroke-width:2;stroke-dasharray:8 8}.flow{fill:none;stroke:#5bd7e0;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="28" fill="url(#bg)"/>
+  <text x="76" y="70" class="eyebrow">MISSION 1 · GOREV1.PY</text>
+  <text x="76" y="117" class="title">Dynamic Horizontal Figure-8 Mission</text>
+  <text x="76" y="151" class="subtitle">Geometry-derived waypoints and verified autonomous mission sequence</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="201" width="880" height="565" rx="24" fill="#0c2638" stroke="#2d5b70" stroke-width="2"/>
+  </g>
+  <text x="108" y="249" class="panel-title">Waypoint geometry</text>
+  <text x="108" y="278" class="copy">Two GPS pole coordinates define the local mission geometry.</text>
+
+  <line x1="264" y1="521" x2="758" y2="521" stroke="#8fa8b8" stroke-width="4"/>
+  <circle cx="264" cy="521" r="14" fill="#f2b84b" stroke="#ffe1a1" stroke-width="4"/>
+  <circle cx="758" cy="521" r="14" fill="#f2b84b" stroke="#ffe1a1" stroke-width="4"/>
+  <text x="225" y="560" class="label">GPS POLE A</text>
+  <text x="719" y="560" class="label">GPS POLE B</text>
+  <text x="511" y="507" text-anchor="middle" class="small">pole-to-pole baseline</text>
+
+  <line x1="511" y1="341" x2="511" y2="693" class="guide"/>
+  <path d="M496 379 h30 v30" fill="none" stroke="#8fa8b8" stroke-width="2"/>
+  <text x="531" y="369" class="small">perpendicular vector</text>
+
+  <path d="M511 521 C363 328 181 358 181 474 C181 589 365 620 511 521 C657 422 841 453 841 568 C841 684 659 714 511 521" class="route"/>
+  <path d="M511 521 C365 620 181 589 181 474 C181 358 363 328 511 521 C659 714 841 684 841 568 C841 453 657 422 511 521" fill="none" stroke="#61dbe3" stroke-width="2" opacity=".38"/>
+
+  <text x="511" y="727" text-anchor="middle" class="copy">Dynamically generated horizontal figure-8 waypoints</text>
+  <text x="108" y="742" class="small">Illustrative geometry · no unverified dimensions or waypoint count shown</text>
+
+  <text x="1002" y="249" class="panel-title">AUTO mission sequence</text>
+  <g>
+    <rect x="1000" y="285" width="505" height="72" rx="16" fill="#102f43" stroke="#376d80"/>
+    <circle cx="1040" cy="321" r="18" fill="#63dce4"/><text x="1040" y="327" text-anchor="middle" class="step-num">1</text>
+    <text x="1073" y="315" class="step-title">Generate mission</text><text x="1073" y="339" class="step-copy">Baseline + perpendicular-vector geometry</text>
+    <path d="M1252 357V383" class="flow"/>
+
+    <rect x="1000" y="385" width="505" height="72" rx="16" fill="#102f43" stroke="#376d80"/>
+    <circle cx="1040" cy="421" r="18" fill="#63dce4"/><text x="1040" y="427" text-anchor="middle" class="step-num">2</text>
+    <text x="1073" y="415" class="step-title">Upload with MAVLink</text><text x="1073" y="439" class="step-copy">Dynamically generated waypoint mission</text>
+    <path d="M1252 457V483" class="flow"/>
+
+    <rect x="1000" y="485" width="505" height="72" rx="16" fill="#102f43" stroke="#376d80"/>
+    <circle cx="1040" cy="521" r="18" fill="#63dce4"/><text x="1040" y="527" text-anchor="middle" class="step-num">3</text>
+    <text x="1073" y="515" class="step-title">AUTO takeoff</text><text x="1073" y="539" class="step-copy">Begin uploaded autonomous mission</text>
+    <path d="M1252 557V583" class="flow"/>
+
+    <rect x="1000" y="585" width="505" height="72" rx="16" fill="#12384b" stroke="#55a2ad"/>
+    <circle cx="1040" cy="621" r="18" fill="#63dce4"/><text x="1040" y="627" text-anchor="middle" class="step-num">4</text>
+    <text x="1073" y="615" class="step-title">Fly two full figure-8 loops</text><text x="1073" y="639" class="step-copy">Execute the horizontal waypoint path</text>
+    <path d="M1252 657V683" class="flow"/>
+
+    <rect x="1000" y="685" width="505" height="72" rx="16" fill="#102f43" stroke="#376d80"/>
+    <circle cx="1040" cy="721" r="18" fill="#63dce4"/><text x="1040" y="727" text-anchor="middle" class="step-num">5</text>
+    <text x="1073" y="715" class="step-title">Return and land</text><text x="1073" y="739" class="step-copy">Return to launch position · landing</text>
+  </g>
+
+  <line x1="76" y1="821" x2="1524" y2="821" stroke="#27475a"/>
+  <text x="76" y="858" class="small">Sequence documents mission logic only; altitude, radius, speed, tracking accuracy and MAVLink message details are intentionally omitted.</text>
+</svg>

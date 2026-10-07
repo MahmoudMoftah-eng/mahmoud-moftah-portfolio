@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2700" height="880" viewBox="0 0 2700 880" role="img" aria-labelledby="title description">
+  <title id="title">STM32 Robot Arm - Cascade PID Control Architecture</title>
+  <desc id="description">STM32 robot arm cascade PID architecture with an outer position loop running on TIM7 every 10 milliseconds and an inner speed loop running on TIM6 every 1 millisecond. PWM and direction commands drive an L298N H-Bridge and DC motor, with measured position and speed returned from a quadrature encoder through the TIM3 encoder interface.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c7a15a"/>
+    </marker>
+    <style>
+      .title { fill: #f2f0e9; font: 600 32px Inter, Arial, sans-serif; letter-spacing: .2px; }
+      .subtitle { fill: #98a39d; font: 400 17px Inter, Arial, sans-serif; letter-spacing: 1.35px; }
+      .boundary { fill: #141b19; stroke: #45514c; stroke-width: 2; stroke-dasharray: 10 8; }
+      .boundary-label { fill: #c7a15a; font: 700 15px Inter, Arial, sans-serif; letter-spacing: 1.6px; }
+      .block { fill: #18201e; stroke: #66736d; stroke-width: 2; }
+      .block-accent { fill: #201f19; stroke: #c7a15a; stroke-width: 3; }
+      .block-external { fill: #171d1b; stroke: #58645f; stroke-width: 2; }
+      .block-title { fill: #f2f0e9; font: 600 21px Inter, Arial, sans-serif; text-anchor: middle; }
+      .block-title-lg { fill: #f2f0e9; font: 600 24px Inter, Arial, sans-serif; text-anchor: middle; }
+      .detail { fill: #b9c1bc; font: 400 17px Inter, Arial, sans-serif; text-anchor: middle; }
+      .note { fill: #98a39d; font: 400 16px Inter, Arial, sans-serif; text-anchor: middle; }
+      .signal { fill: #c7a15a; font: 600 15px Inter, Arial, sans-serif; text-anchor: middle; letter-spacing: .5px; }
+      .flow { fill: none; stroke: #c7a15a; stroke-width: 3; marker-end: url(#arrow); }
+      .feedback { fill: none; stroke: #8d9993; stroke-width: 3; marker-end: url(#arrow); }
+      .support { fill: #151c1a; stroke: #3d4944; stroke-width: 1.5; }
+      .divider { stroke: #303a36; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="2700" height="880" rx="18" fill="#111716"/>
+  <text class="title" x="60" y="58">STM32 Robot Arm - Cascade PID Control Architecture</text>
+  <text class="subtitle" x="60" y="88">CONTROL STRUCTURE DOCUMENTED IN THE EARLY PROJECT REPORT</text>
+  <line class="divider" x1="60" y1="112" x2="2640" y2="112"/>
+
+  <rect class="boundary" x="315" y="178" width="1415" height="430" rx="16"/>
+  <text class="boundary-label" x="345" y="210">STM32F446RE CONTROL DOMAIN</text>
+
+  <rect class="block-accent" x="60" y="310" width="220" height="112" rx="10"/>
+  <text class="block-title-lg" x="170" y="354">Target Angle</text>
+  <text class="detail" x="170" y="385">position reference</text>
+
+  <path class="flow" d="M280 366 H350"/>
+
+  <rect class="block" x="350" y="292" width="300" height="148" rx="10"/>
+  <text class="block-title-lg" x="500" y="329">Position PID</text>
+  <text class="detail" x="500" y="360">outer loop</text>
+  <text class="detail" x="500" y="388">10 ms / TIM7</text>
+  <text class="note" x="500" y="417">100 Hz</text>
+
+  <path class="flow" d="M650 366 H720"/>
+  <text class="signal" x="685" y="346">TARGET RPM</text>
+
+  <rect class="block" x="720" y="310" width="210" height="112" rx="10"/>
+  <text class="block-title" x="825" y="354">Speed Reference</text>
+  <text class="detail" x="825" y="385">target RPM</text>
+
+  <path class="flow" d="M930 366 H1000"/>
+
+  <rect class="block" x="1000" y="292" width="300" height="148" rx="10"/>
+  <text class="block-title-lg" x="1150" y="329">Speed PID</text>
+  <text class="detail" x="1150" y="360">inner loop</text>
+  <text class="detail" x="1150" y="388">1 ms / TIM6</text>
+  <text class="note" x="1150" y="417">1 kHz</text>
+
+  <path class="flow" d="M1300 366 H1370"/>
+
+  <rect class="block" x="1370" y="300" width="300" height="132" rx="10"/>
+  <text class="block-title-lg" x="1520" y="338">PWM + Direction</text>
+  <text class="detail" x="1520" y="370">TIM1 PWM output</text>
+  <text class="note" x="1520" y="401">bounded motor command</text>
+
+  <path class="flow" d="M1670 366 H1760"/>
+
+  <rect class="block-external" x="1760" y="310" width="220" height="112" rx="10"/>
+  <text class="block-title-lg" x="1870" y="354">L298N</text>
+  <text class="detail" x="1870" y="385">H-Bridge</text>
+
+  <path class="flow" d="M1980 366 H2050"/>
+
+  <rect class="block-external" x="2050" y="310" width="210" height="112" rx="10"/>
+  <text class="block-title-lg" x="2155" y="354">DC Motor</text>
+  <text class="detail" x="2155" y="385">arm actuator</text>
+
+  <path class="flow" d="M2260 366 H2330"/>
+
+  <rect class="block-external" x="2330" y="300" width="310" height="132" rx="10"/>
+  <text class="block-title-lg" x="2485" y="341">Quadrature Encoder</text>
+  <text class="detail" x="2485" y="373">position + speed sensing</text>
+  <text class="note" x="2485" y="404">motor-shaft feedback</text>
+
+  <rect class="support" x="350" y="500" width="350" height="72" rx="9"/>
+  <text class="block-title" x="525" y="530">UART Telemetry / Debug</text>
+  <text class="detail" x="525" y="555">115200 baud</text>
+
+  <rect class="support" x="755" y="500" width="400" height="72" rx="9"/>
+  <text class="block-title" x="955" y="530">Anti-windup</text>
+  <text class="detail" x="955" y="555">PID integral clamping</text>
+
+  <rect class="support" x="1370" y="500" width="300" height="72" rx="9"/>
+  <text class="block-title" x="1520" y="530">TIM3 Interface</text>
+  <text class="detail" x="1520" y="555">quadrature encoder mode</text>
+
+  <path class="feedback" d="M2485 432 V672 H1520 V572"/>
+  <text class="signal" x="2070" y="654">ENCODER COUNTS</text>
+
+  <path class="feedback" d="M1370 536 H1218 V440"/>
+  <text class="signal" x="1260" y="518">MEASURED SPEED (RPM)</text>
+
+  <path class="feedback" d="M1370 552 H1260 V722 H500 V440"/>
+  <text class="signal" x="820" y="704">MEASURED POSITION (DEGREES)</text>
+
+  <line class="divider" x1="60" y1="784" x2="2640" y2="784"/>
+  <text class="subtitle" x="60" y="824">CASCADED POSITION-SPEED CONTROL · TIMER-DRIVEN EXECUTION · ENCODER FEEDBACK</text>
+  <text class="note" x="2435" y="824">Architecture evidence - no hardware performance claim</text>
+</svg>

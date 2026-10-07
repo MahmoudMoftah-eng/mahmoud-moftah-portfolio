@@ -1,0 +1,111 @@
+<figure class="abra-architecture" aria-labelledby="abra-architecture-caption">
+  <div class="architecture-inputs" aria-label="Conceptual information sources">
+    <div>Competition server / target data</div>
+    <div>Onboard sensing</div>
+    <div>Drone telemetry</div>
+  </div>
+  <span class="architecture-arrow" aria-hidden="true">↓</span>
+  <ol class="architecture-flow" aria-label="Conceptual ABRA Hunter system flow">
+    <li>State / target information</li>
+    <li>Guidance logic</li>
+    <li>Attitude / altitude references</li>
+    <li>Flight-control layer</li>
+    <li>RC / Betaflight interface</li>
+    <li>Drone</li>
+  </ol>
+  <figcaption id="abra-architecture-caption">
+    Conceptual system flow based on the project description. Replace with a verified project architecture diagram when available.
+  </figcaption>
+</figure>
+
+<style>
+  .abra-architecture {
+    margin: 28px 0 0;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface);
+  }
+
+  .architecture-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .architecture-inputs div,
+  .architecture-flow li {
+    border: 1px solid #455148;
+    background: #172020;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .architecture-inputs div {
+    min-height: 58px;
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .architecture-arrow {
+    display: block;
+    margin: 8px 0;
+    color: var(--accent);
+    text-align: center;
+    font-size: 22px;
+  }
+
+  .architecture-flow {
+    display: grid;
+    gap: 7px;
+    max-width: 390px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .architecture-flow li {
+    padding: 11px 14px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .architecture-flow li + li::before {
+    content: "↓";
+    display: block;
+    height: 14px;
+    margin-top: -21px;
+    color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .architecture-flow li:nth-child(2) {
+    border-color: var(--accent);
+  }
+
+  .abra-architecture figcaption {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  @media (max-width: 560px) {
+    .abra-architecture {
+      padding: 15px;
+    }
+
+    .architecture-inputs {
+      grid-template-columns: 1fr;
+      gap: 7px;
+    }
+
+    .architecture-inputs div {
+      min-height: 44px;
+    }
+  }
+</style>

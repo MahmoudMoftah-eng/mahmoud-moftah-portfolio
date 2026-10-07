@@ -2,26 +2,166 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Icon from '../components/Icon.astro';
-import SystemDiagram from '../components/SystemDiagram.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import SectionHeading from '../components/SectionHeading.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
-import ContactCTA from '../components/ContactCTA.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import {projects} from '../data/projects';
-import {experience,skills} from '../data/experience';
+import {experience} from '../data/experience';
 import {site, url} from '../data/site';
+
+// Homepage summaries leave the full project data and case studies unchanged.
+const selectedProjects = projects
+  .filter(project => ['abra-hunter', 'stm32-robot-arm', 'yutpa-uav'].includes(project.slug))
+  .map(project => {
+    if (project.slug === 'abra-hunter') return {
+      ...project,
+      heroImage: 'projects/abra/abra-aircraft-overview.jpg',
+      summary: 'Guidance and cascaded control integrated with Betaflight ANGLE mode, supported by flight testing and flight-log analysis.',
+    };
+    if (project.slug === 'stm32-robot-arm') return {
+      ...project,
+      period: '',
+      summary: 'Embedded C firmware for STM32 cascade position–speed control, with pre-hardware MATLAB / Simulink evaluation of the control structure.',
+    };
+    return {...project};
+  });
+
+const homepageExperience = experience.map(item => ({
+  ...item,
+  summary: item.team === 'ABRA Student Team'
+    ? 'Guidance & Control Lead for ABRA Hunter and Autonomous Flight Software Engineer for YUTPA.'
+    : 'Developed the ROS2/Gazebo environment and integrated models and sensors to support localization, SLAM and navigation testing; member of the team awarded TEKNOFEST “Best Software Team”.',
+}));
+
+const homepageSkills = [
+  {
+    name: 'Embedded Systems & Electronics',
+    items: 'STM32 · Embedded C firmware · Timers / interrupts · PWM / UART · Motor control / H-Bridge · ST-Link / Logic Analyzer',
+  },
+  {
+    name: 'Control & Guidance',
+    items: 'PID / cascade control · System identification · Pure Pursuit · Proportional Navigation · MATLAB / Simulink · Flight-log analysis',
+  },
+  {
+    name: 'UAV & Robotics',
+    items: 'Betaflight · ArduPilot · MAVLink / pymavlink · SITL · Mission Planner · ROS2 / Gazebo',
+  },
+  {
+    name: 'Programming & Engineering Tools',
+    items: 'Python · Git / GitHub · Linux · STM32CubeIDE / CubeMX',
+    learning: 'Ongoing learning: broader C/C++ development and Embedded Linux.',
+  },
+];
 ---
 <BaseLayout>
-<section class="shell hero">
-  <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> MECHATRONICS ENGINEERING STUDENT</p><p class="hero-name">Mahmoud Moftah Mohamed</p><h1>Embedded systems.<br/>Control.<br/><span>Autonomous machines.</span></h1><p class="hero-description">Developing embedded firmware, control systems and autonomous UAV software. From STM32 control loops to real-world TEKNOFEST projects.</p><div class="hero-actions"><Button href={url('projects/')}>View projects</Button><Button href={url(site.cvAvailable ? site.cv : 'cv/')} secondary download={site.cvAvailable}><Icon name="download" size={17}/>Download CV</Button></div><SocialLinks/></div>
-  <div class="hero-visual"><div class="visual-kicker"><span>ENGINEERING AT THE INTERSECTION</span><span>01 / 03</span></div><SystemDiagram/><div class="visual-note"><span class="tiny-square"></span><p>Software that interacts<br/>with the physical world.</p></div></div>
-</section>
-<div class="shell hero-foot"><span><Icon name="pin" size={15}/> Sakarya, Türkiye</span><span>Sakarya University of Applied Sciences</span><span>Expected graduation <strong>July 2027</strong></span></div>
-<section class="shell section" id="projects"><SectionHeading index="01" label="SELECTED WORK" title="Engineering in practice." href={url('projects/')} linkLabel="All projects"/><div class="project-grid">{projects.map((p,i)=><ProjectCard project={p} number={i+1}/>)}</div></section>
-<section class="shell section" id="focus"><SectionHeading index="02" label="ENGINEERING FOCUS" title="A connected set of skills."/><div class="skills-grid">{skills.map(skill=><article class="skill-group"><div class="skill-icon"><Icon name={skill.icon} size={23}/></div><h3>{skill.name}</h3><p class="skill-note">{skill.note}</p><p class="skill-list">{skill.items.join(' · ')}</p>{skill.developing && <p class="skill-learning">{skill.developing}</p>}</article>)}</div></section>
-<section class="shell section" id="experience"><SectionHeading index="03" label="EXPERIENCE" title="Built with a team."/>{experience.map(item=><ExperienceItem item={item}/>)}</section>
-<section class="shell section" id="current-work"><SectionHeading index="04" label="CURRENTLY BUILDING" title="The next system."/><article class="current-project"><div><span class="work-status"><span class="status-dot"></span>In Development — Graduation Project</span><h3>Modular Embedded Flight-Control<br class="desktop-break"/> and Autonomous Navigation Platform for UAVs</h3><p>Engineering a modular embedded platform with testability and system integration at its core. The scope includes flight control, sensor interfaces, telemetry, safety logic and navigation.</p><p class="development-note">These are development goals; implementation and validation are ongoing.</p></div><div class="current-scope"><span class="small-label">PLANNED ENGINEERING SCOPE</span><ul><li>Embedded control & sensors</li><li>Navigation & guidance</li><li>Telemetry & safety logic</li><li>Integration & testability</li></ul></div></article></section>
-<section class="shell section" id="education"><SectionHeading index="05" label="EDUCATION" title="The foundation."/><div class="education-row"><div><h3>B.Sc. Mechatronics Engineering</h3><p>Sakarya University of Applied Sciences — SUBÜ</p><p class="education-topics">Embedded Systems · Control Systems · Robotics · Electronics<br/>Signals & Systems · Microcontrollers · Simulation</p></div><div class="education-meta"><span class="small-label">EXPECTED GRADUATION</span><strong>July 2027</strong><p>Sakarya, Türkiye</p></div></div></section>
-<ContactCTA/>
+  <div class="homepage">
+    <section class="shell hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Mechatronics Engineering Student</p>
+        <p class="hero-name">{site.name}</p>
+        <h1>Embedded Systems · Control<br/><span>Autonomous Systems</span></h1>
+        <p class="hero-description">Developing embedded firmware and UAV guidance and mission software through hardware integration, simulation and flight testing.</p>
+        <p class="hero-meta">{site.location} · Expected graduation July 2027</p>
+        <div class="hero-actions">
+          <Button href={url('projects/')}>View Projects</Button>
+          <Button href={url(site.cvAvailable ? site.cv : 'cv/')} secondary download={site.cvAvailable}>
+            <Icon name="download" size={17}/>Download CV
+          </Button>
+        </div>
+        <SocialLinks/>
+      </div>
+    </section>
+
+    <section class="shell section" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <h2 id="projects-title">Selected Projects</h2>
+        <a class="text-link" href={url('projects/')}>All projects</a>
+      </div>
+      <div class="project-grid">
+        {selectedProjects.map((project, i) => (
+          <ProjectCard project={project} number={i + 1} showDiagram={false}
+            imageAlt={project.slug === 'abra-hunter' ? 'ABRA Hunter UAV on the ground during field testing at sunset.' : undefined}/>
+        ))}
+      </div>
+    </section>
+
+    <section class="shell section" id="experience" aria-labelledby="experience-title">
+      <div class="section-heading"><h2 id="experience-title">Experience</h2></div>
+      {homepageExperience.map(item => <ExperienceItem item={item}/>)}
+    </section>
+
+    <section class="shell section" id="focus" aria-labelledby="skills-title">
+      <div class="section-heading"><h2 id="skills-title">Technical Skills</h2></div>
+      <div class="skills-grid">
+        {homepageSkills.map(skill => (
+          <article class="skill-group">
+            <h3>{skill.name}</h3>
+            <p class="skill-list">{skill.items}</p>
+            {skill.learning && <p class="skill-learning">{skill.learning}</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="shell section" id="education" aria-labelledby="education-title">
+      <div class="section-heading"><h2 id="education-title">Education & Current Work</h2></div>
+      <div class="education-current">
+        <div>
+          <h3>B.Sc. Mechatronics Engineering</h3>
+          <p>Sakarya University of Applied Sciences — SUBÜ</p>
+          <p>Expected July 2027</p>
+        </div>
+        <article id="current-work">
+          <p class="small-label">Graduation Project · In Development</p>
+          <h3>Modular Embedded Flight-Control and Autonomous Navigation Platform for UAVs</h3>
+          <p>Planned scope combines embedded flight control and autonomous navigation with sensor interfaces, telemetry and safety logic.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell contact-cta" aria-labelledby="contact-title">
+      <div>
+        <h2 id="contact-title">Contact</h2>
+        <p>For engineering internship or job enquiries, email me.</p>
+      </div>
+      <Button href={`mailto:${site.email}`}><Icon name="mail" size={18}/>Email Mahmoud</Button>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .homepage :global(.hero) {
+    display: block;
+    padding-block: 52px 40px;
+  }
+  .homepage :global(.hero h1) {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    max-width: 950px;
+  }
+  .homepage :global(.hero-description) { max-width: 740px; margin-top: 20px; }
+  .hero-meta { margin-top: 16px; color: var(--muted); font-size: 0.875rem; }
+  .homepage :global(.hero-actions) { margin-top: 22px; }
+  .homepage :global(.hero-socials) { margin-top: 20px; }
+  .homepage :global(.section) { padding-block: 48px; }
+  .homepage :global(.section-heading) { margin-bottom: 26px; }
+  .homepage :global(.project-grid) { align-items: start; }
+  .homepage :global(.project-card:first-child) { grid-row: span 2; }
+  .homepage :global(.secondary-card .project-summary) { min-height: 0; }
+  .homepage :global(.project-image) { height: auto; aspect-ratio: 2 / 1; }
+  .homepage :global(.skills-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; }
+  .homepage :global(.skill-list) { margin-top: 10px; line-height: 1.75; }
+  .education-current { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; }
+  .education-current h3 { font-size: 1.25rem; line-height: 1.45; }
+  .education-current p { margin-top: 12px; }
+  .education-current .small-label { margin-top: 0; margin-bottom: 10px; }
+  .homepage :global(.contact-cta) { padding-block: 40px 48px; }
+  .homepage :global(.contact-cta h2) { margin-top: 0; font-size: 2rem; }
+  .homepage :global(.contact-cta p) { margin-top: 12px; }
+  @media (max-width: 600px) {
+    .homepage :global(.hero) { padding-block: 36px 30px; }
+    .homepage :global(.section) { padding-block: 34px; }
+    .homepage :global(.project-card:first-child) { grid-row: auto; }
+    .homepage :global(.skills-grid), .education-current { grid-template-columns: 1fr; gap: 24px; }
+    .homepage :global(.skill-group) { padding-top: 16px; }
+  }
+</style>

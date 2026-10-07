@@ -1,6 +1,6 @@
 # Mahmoud Moftah — Engineering Portfolio
 
-A static, responsive portfolio built with Astro 5, strict TypeScript and Tailwind CSS 4. No React, backend, analytics, or runtime data services. Content is based on the supplied engineering brief.
+A static, responsive portfolio built with Astro 5, strict TypeScript and Tailwind CSS 4. No React, backend, analytics, or runtime data services. `PORTFOLIO_CONTEXT.md` is the source of truth for profile details, project attribution and content integrity.
 
 ## Run locally
 
@@ -26,7 +26,9 @@ pnpm preview
 
 ```text
 portfolio/
+├── PORTFOLIO_CONTEXT.md   # Profile source of truth and content rules
 ├── public/
+│   ├── Mahmoud_Moftah_CV.pdf
 │   ├── favicon.svg
 │   └── projects/{abra,robot-arm,yutpa,usv}/
 ├── src/
@@ -56,8 +58,8 @@ portfolio/
 
 - Edit `src/data/projects.ts` to update project summaries, roles, technical sections, evidence and technologies.
 - Edit `src/data/experience.ts` for experience and categorized skills.
-- Edit `src/data/site.ts` for contact details and profile URLs. Unset profiles appear as explicit TODO labels, never dead links.
-- Put the real CV in `public/Mahmoud_Moftah_CV.pdf`. Rebuild: CV links automatically become downloads. Until then they lead to a useful CV page with an email request link.
+- Edit `src/data/site.ts` for contact details and profile URLs. GitHub and LinkedIn are currently configured there.
+- The CV PDF is `public/Mahmoud_Moftah_CV.pdf`. `site.ts` detects its presence automatically; when present, CV links become downloads. If it is absent in another checkout, the site falls back to the CV page with an email request link.
 - Put media into the corresponding `public/projects/` folder and set `src` in the relevant media record, e.g. `projects/robot-arm/hardware.webp`. Add meaningful `alt` text. Supplied media replace placeholders automatically.
 - The diagram component is a **conceptual schematic**, not evidence of an actual configuration or measured performance. Replace it with a verified project diagram when available. The media area separately reserves a place for original architecture diagrams.
 - Theme colors live in `:root` in `global.css`. The theme uses a single brass accent and can later gain a light-theme token set.

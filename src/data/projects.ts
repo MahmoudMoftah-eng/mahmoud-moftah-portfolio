@@ -8,6 +8,7 @@ export interface ProjectMedia {
   kind: "image" | "video" | "document";
   src?: string;
   alt?: string;
+  wide?: boolean;
 }
 export interface Project {
   slug: string;
@@ -37,32 +38,32 @@ export interface Project {
 
 const abra = {
   problem:
-    "An autonomous FPV quadrotor system designed to approach, track and intercept a moving target aircraft in the TEKNOFEST competition context, using competition-server telemetry and onboard sensing.",
+    "An autonomous FPV quadrotor mission to approach, track and intercept a target aircraft in the TEKNOFEST 2026 competition context, using competition-server target data, onboard sensing and drone telemetry.",
   contributions: [
-    "Designed the mission and control architecture for autonomous flight phases.",
-    "Implemented Pure Pursuit and Proportional Navigation guidance.",
-    "Generated attitude and altitude references and integrated guidance with flight control and telemetry.",
-    "Supported real flight testing, flight-log analysis and controller tuning.",
+    "Led guidance architecture and flight-control logic for the autonomous mission.",
+    "Implemented Pure Pursuit for target approach and Proportional Navigation for terminal interception behavior.",
+    "Designed and tuned controller behavior, including altitude and vertical-velocity control and reference generation.",
+    "Integrated guidance, control and telemetry; supported flight testing and flight-log analysis.",
   ],
   architecture: [
-    "Worked on an approximately 50 Hz guidance/control execution architecture.",
-    "Connected mission logic, telemetry, guidance reference generation and cascaded flight-control logic.",
-    "Used Betaflight ANGLE mode within the flight-control architecture.",
+    "Competition-server target data, onboard sensing and drone telemetry inform state / target information for guidance.",
+    "Guidance produces attitude and altitude references; cascaded control converts these into commands for the Betaflight interface.",
+    "The mission / guidance-control execution architecture runs at approximately 50 Hz and uses Betaflight ANGLE mode.",
   ],
   testing: [
-    "Used flight data to identify vertical dynamics and MATLAB to analyse system response and tune controllers.",
-    "Supported real flight testing and reviewed flight logs to guide tuning and integration.",
-    "Worked on manual RC safety handover and override concepts.",
+    "Built up validation through system integration checks and autonomous flight tests.",
+    "Used flight-log analysis and MATLAB to identify vertical dynamics, review system response and guide controller tuning.",
+    "Inspected telemetry and considered manual RC safety handover / override behavior during testing.",
   ],
   results: [
-    "Implemented guidance algorithms and integrated reference generation into the autonomous stack.",
-    "Developed and tuned cascaded control logic with practical actuator and signal constraints.",
-    "Numerical flight-performance results are not yet included; verified plots and test records will be added.",
+    "Implemented Pure Pursuit and Proportional Navigation guidance and connected their references to the flight-control architecture.",
+    "Developed and tuned cascaded altitude / vertical-velocity control with practical signal and output constraints.",
+    "Integrated telemetry, testing and flight-log analysis into the guidance and control workflow.",
   ],
   lessons: [
-    "Guidance reference generation, controller behaviour and telemetry need to be considered together.",
-    "Flight-log analysis connects control models to the behaviour of real hardware.",
-    "Manual handover and limiting behaviour belong in the control architecture from the start.",
+    "Guidance references, controller behavior and the flight-controller interface have to be designed as one chain.",
+    "Flight logs and MATLAB analysis connect vertical-dynamics models to real aircraft behavior.",
+    "Output limits and a clear manual handover path are part of a usable autonomous-flight design.",
   ],
 };
 const arm = {
@@ -99,15 +100,16 @@ const yutpa = {
   problem:
     "Develop autonomous rotary-wing mission software that coordinates a companion computer and flight controller, from command validation and takeoff to generated waypoints and landing.",
   contributions: [
-    "Developed MAVLink communication between Pixhawk and the companion computer.",
-    "Implemented flight-mode transitions, autonomous arming / takeoff sequencing and landing logic.",
+    "Developed pymavlink / MAVLink communication between the Raspberry Pi 5 mission computer and SpeedyBee F405 V4 flight controller over USB Type-C.",
+    "Implemented flight-mode transitions, autonomous arming / takeoff sequencing, mission execution, return and landing logic.",
     "Added command validation and fault handling.",
-    "Developed dynamic waypoint generation, including an infinity-shaped trajectory from two GPS reference points.",
+    "Developed gorev1.py to generate a horizontal figure-8 mission dynamically from two GPS pole coordinates and perpendicular-vector geometry.",
   ],
   architecture: [
-    "Raspberry Pi 5 companion computer running Python mission software.",
-    "MAVLink / pymavlink communication with a Pixhawk Cube Orange running ArduPilot.",
-    "Mission waypoint generation and upload, with AUTO / GUIDED style autonomous mission flows.",
+    "Raspberry Pi 5 mission computer running Python autonomous mission software.",
+    "USB Type-C connection to a SpeedyBee F405 V4 flight controller running ArduPilot, using pymavlink / MAVLink.",
+    "Mission Planner supports mission upload and monitoring, while GPS supplies navigation data.",
+    "AUTO handles autonomous takeoff, uploaded mission execution, return and landing; GUIDED supports the target-alignment flow.",
   ],
   testing: [
     "Tested software with ArduPilot SITL and simulation tools.",
@@ -161,7 +163,7 @@ export const projects: Project[] = [
     period: "TEKNOFEST 2026",
     context: "ABRA Student Team · Fighter UAV / Hunter Drone project",
     summary:
-      "Guidance algorithms, cascaded flight control and system integration for an autonomous FPV quadrotor.",
+      "Guidance, cascaded flight control and telemetry integration for an autonomous FPV quadrotor, with flight-log analysis guiding controller tuning.",
     technologies: [
       "Python",
       "MATLAB",
@@ -178,35 +180,35 @@ export const projects: Project[] = [
     ...abra,
     sections: [
       {
-        title: "Overview",
+        title: "Project Overview",
         paragraphs: [
-          "ABRA Hunter combines guidance, flight control and system integration in an autonomous FPV quadrotor project for TEKNOFEST 2026. My work focused on guidance and control, with real flight testing informing the development process.",
+          "ABRA Hunter is an autonomous FPV quadrotor project for TEKNOFEST 2026. As Guidance & Control Lead, I worked across guidance, cascaded flight control, telemetry integration and real-flight validation. Flight logs and MATLAB analysis informed vertical-dynamics identification and controller tuning.",
         ],
       },
       { title: "Mission", paragraphs: [abra.problem] },
       {
-        title: "My Role",
+        title: "My Responsibility",
         paragraphs: [
-          "As Guidance & Control Lead, my primary contribution was the guidance and flight-control architecture.",
+          "As Guidance & Control Lead, I was responsible for the guidance architecture, flight-control logic, controller design and tuning, system integration, flight testing and log analysis.",
         ],
         items: abra.contributions,
       },
       { title: "System Architecture", items: abra.architecture },
       {
-        title: "Guidance Architecture",
+        title: "Guidance System",
         paragraphs: [
-          "Implemented Pure Pursuit and Proportional Navigation guidance to generate references for the flight-control system. The guidance layer produced attitude and altitude references and connected to telemetry and the wider autonomous stack.",
+          "Pure Pursuit supported target approach and pursuit behavior. Proportional Navigation supported the terminal interception phase. Both methods operated at the guidance layer: they generated reference commands for the controller layer rather than directly commanding motors.",
         ],
       },
       {
         title: "Flight Control",
         paragraphs: [
-          "Developed and tuned cascaded flight-control logic, including altitude PID and vertical-velocity control. Used flight data for vertical dynamics identification and MATLAB for analysis and tuning.",
+          "Guidance-generated attitude and altitude references fed the controller layer, which converted them into commands compatible with Betaflight ANGLE mode. Altitude and vertical-velocity behavior was modeled and tuned using flight data, flight-log analysis and MATLAB. This work complemented the Betaflight flight-control stack; it did not replace its low-level flight controller.",
         ],
         items: [
-          "Hover feed-forward and tilt compensation.",
-          "Anti-windup, filtering and output limiting.",
-          "Slew-rate limiting and integration with Betaflight ANGLE mode.",
+          "Cascade control for altitude and vertical-velocity behavior, with hover feed-forward and tilt compensation.",
+          "Anti-windup and filtering to handle controller state and noisy signals.",
+          "Output limits and slew-rate limiting to bound command changes.",
         ],
       },
       {
@@ -215,24 +217,46 @@ export const projects: Project[] = [
           "Integrated team-developed perception and state-estimation modules into the autonomous flight architecture. My contribution was integration with guidance, control and telemetry; I do not claim authorship of those perception or estimation algorithms.",
         ],
       },
-      { title: "Testing", items: abra.testing },
-      { title: "Results / Engineering Outcomes", items: abra.results },
+      { title: "Testing & Validation", items: abra.testing },
       {
-        title: "Challenges",
+        title: "Engineering Challenges",
         paragraphs: [
-          "The engineering work brought together guidance references, vertical dynamics, bounded actuator commands and flight-controller behaviour. Integration and tuning needed to account for the real system as well as the control model.",
+          "The guidance output had to match the flight-control interface while the altitude loop accounted for vertical dynamics, tilt effects and bounded commands. Telemetry and flight logs were essential for interpreting real-aircraft behavior and tuning the integrated system. Safety handover also had to remain part of the autonomous-flight design.",
         ],
       },
+      { title: "Key Outcomes", items: abra.results },
       { title: "What I Learned", items: abra.lessons },
     ],
     mediaDirectory: "abra",
     media: [
-      { label: "System architecture diagram", kind: "image" },
-      { label: "Drone photographs", kind: "image" },
-      { label: "Flight-test video", kind: "video" },
-      { label: "MATLAB analysis graphs", kind: "image" },
-      { label: "Flight logs", kind: "document" },
-      { label: "Guidance diagrams", kind: "image" },
+      {
+        label: "ABRA Hunter platform during field testing.",
+        kind: "image",
+        src: "projects/abra/abra-aircraft-overview.jpg",
+        alt: "ABRA Hunter UAV on the ground during field testing at sunset.",
+      },
+      {
+        label:
+          "System-level architecture of the ABRA Hunter autonomous flight stack. My work focused on guidance, control, system integration and flight testing; perception and state-estimation modules were developed collaboratively within the team.",
+        kind: "image",
+        src: "projects/abra/abra-system-architecture.svg",
+        alt: "ABRA Hunter autonomous UAV system architecture showing camera vision, competition server target data and drone telemetry feeding guidance, followed by control reference, controllers, RC command and drone plant.",
+        wide: true,
+      },
+      {
+        label: "Verified active controller architecture from guidance references to the Betaflight ANGLE-mode RC interface.",
+        kind: "image",
+        src: "projects/abra/abra-controller-architecture.svg",
+        alt: "ABRA Hunter active controller architecture showing Guidance and ControlReference splitting into an AngleModeAdapter path and a cascaded altitude and vertical-velocity path, then converging at RCCommand before SkyDaggerLink converts the commands to RC microseconds for Betaflight ANGLE mode.",
+        wide: true,
+      },
+      {
+        label: "Real flight-test response from the ABRA Hunter mission logs.",
+        kind: "image",
+        src: "projects/abra/abra-flight-response.png",
+        alt: "Real ABRA flight-test mission response plot showing altitude reference versus measured altitude, vertical velocity reference versus measured vertical velocity, throttle behavior, and attitude reference and response.",
+        wide: true,
+      },
     ],
   },
   {
@@ -279,7 +303,7 @@ export const projects: Project[] = [
       {
         title: "Electronics",
         paragraphs: [
-          "Electronics work included an H-Bridge implementation using an IR2110 gate driver and IRF540N MOSFETs, with a bootstrap circuit and flyback protection. This connected the firmware and control design to a physical motor-drive stage.",
+          "The STM32F446RE firmware used PWM motor control with an L298N motor driver and quadrature encoder feedback. Timer-based cascaded position and velocity loops generated the motor commands.",
         ],
       },
       {
@@ -297,12 +321,20 @@ export const projects: Project[] = [
     ],
     mediaDirectory: "robot-arm",
     media: [
-      { label: "Cascade PID diagram", kind: "image" },
-      { label: "STM32 architecture", kind: "image" },
-      { label: "Simulink graph", kind: "image" },
-      { label: "Hardware photograph", kind: "image" },
-      { label: "PCB / wiring photographs", kind: "image" },
-      { label: "UART telemetry graph", kind: "image" },
+      {
+        label: "Cascade PID control architecture documented for the STM32F446RE implementation.",
+        kind: "image",
+        src: "projects/stm32-robot-arm/stm32-cascade-control.svg",
+        alt: "STM32 robot arm cascade PID architecture with an outer position loop and inner speed loop controlling a DC motor through an L298N driver.",
+        wide: true,
+      },
+      {
+        label: "Pre-hardware cascade PID simulation used to evaluate the position-speed control structure.",
+        kind: "image",
+        src: "projects/stm32-robot-arm/stm32-simulink-response.png",
+        alt: "Simulink cascade PID model and simulated response for the STM32 robot arm control system.",
+        wide: true,
+      },
     ],
   },
   {
@@ -320,7 +352,7 @@ export const projects: Project[] = [
       "MAVLink",
       "pymavlink",
       "ArduPilot",
-      "Pixhawk Cube Orange",
+      "SpeedyBee F405 V4",
       "Raspberry Pi 5",
       "SITL",
       "Gazebo",
@@ -341,19 +373,19 @@ export const projects: Project[] = [
       {
         title: "MAVLink Communication",
         paragraphs: [
-          "Developed Python communication between the companion computer and Pixhawk using MAVLink / pymavlink. The work included flight-mode transitions, command validation, fault handling, and generating and uploading mission waypoints.",
+          "Developed pymavlink / MAVLink communication between the Raspberry Pi 5 mission computer and the final SpeedyBee F405 V4 flight controller over USB Type-C. ArduPilot runs on the flight controller, and Mission Planner supports mission upload and vehicle monitoring. Pixhawk Cube Orange belonged only to the earlier pre-PSR design.",
         ],
       },
       {
         title: "Mission State Machine",
         paragraphs: [
-          "Implemented autonomous arming and takeoff sequencing, mission logic and landing logic. AUTO / GUIDED style flows coordinated the mission stages, with validation and fault handling around commands and transitions.",
+          "AUTO handles autonomous takeoff, execution of the uploaded waypoint mission, return to the recorded launch position and landing. GUIDED is used separately in the target-alignment flow. Command validation and fault handling support the mode transitions and mission sequence.",
         ],
       },
       {
         title: "Dynamic Waypoint Generation",
         paragraphs: [
-          "Developed an infinity-shaped flight trajectory using geometry calculated from two GPS reference points. Generated the mission waypoints and uploaded them to support autonomous execution. The actual trajectory diagram is reserved in the project media below.",
+          "Mission 1 runs through gorev1.py. Two GPS pole coordinates define a pole-to-pole baseline; a perpendicular vector makes the horizontal figure-8 geometry independent of pole orientation. The generated waypoints are uploaded through MAVLink for two complete figure-8 loops, followed by return to the recorded launch position and landing.",
         ],
       },
       {
@@ -367,11 +399,20 @@ export const projects: Project[] = [
     ],
     mediaDirectory: "yutpa",
     media: [
-      { label: "Infinity trajectory diagram", kind: "image" },
-      { label: "Gazebo screenshot", kind: "image" },
-      { label: "Mission Planner screenshot", kind: "image" },
-      { label: "MAVLink architecture", kind: "image" },
-      { label: "Flight video", kind: "video" },
+      {
+        label: "Verified Mission 1 geometry and AUTO sequence for the dynamically generated horizontal figure-8 route.",
+        kind: "image",
+        src: "projects/yutpa/yutpa-figure8-mission.svg",
+        alt: "YUTPA Mission 1 diagram showing two GPS pole coordinates, their baseline, perpendicular-vector geometry, dynamically generated horizontal figure-8 waypoints, MAVLink mission upload, AUTO takeoff, two complete loops, return to launch and landing.",
+        wide: true,
+      },
+      {
+        label: "Final post-PSR YUTPA mission-computer, MAVLink and flight-controller architecture.",
+        kind: "image",
+        src: "projects/yutpa/yutpa-system-architecture.svg",
+        alt: "YUTPA system architecture with Raspberry Pi 5 mission software connected over USB Type-C using pymavlink and MAVLink to a SpeedyBee F405 V4 running ArduPilot, with GPS navigation, Mission Planner upload and monitoring, AUTO mission execution, and GUIDED target alignment.",
+        wide: true,
+      },
     ],
   },
   {
@@ -419,11 +460,7 @@ export const projects: Project[] = [
       { title: "What I Learned", items: usv.lessons },
     ],
     mediaDirectory: "usv",
-    media: [
-      { label: "Gazebo environment screenshot", kind: "image" },
-      { label: "Robot model and TF frames", kind: "image" },
-      { label: "Simulation demonstration", kind: "video" },
-    ],
+    media: [],
   },
 ];
 export const sectionId = (text: string) =>
