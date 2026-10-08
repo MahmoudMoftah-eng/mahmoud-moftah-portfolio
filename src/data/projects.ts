@@ -70,10 +70,10 @@ const arm = {
   problem:
     "Develop a robot-arm position-control system that connects a real-time embedded controller to a motor and its drive electronics, with separate position and velocity control loops.",
   contributions: [
-    "Led embedded software development on the STM32F446RE.",
-    "Implemented an outer position loop and an inner motor-velocity loop.",
-    "Integrated PWM motor commands, interrupt-driven execution and UART telemetry.",
-    "Validated and tuned PID behaviour with MATLAB / Simulink and hardware testing.",
+    "Led STM32 software architecture and peripheral configuration for the STM32F446RE.",
+    "Designed an outer position loop and an inner motor-speed loop.",
+    "Specified PWM motor commands, timer-driven execution and UART telemetry.",
+    "Defined the firmware timing and interfaces alongside the team's pre-hardware Simulink evaluation.",
   ],
   architecture: [
     "Outer position loop: approximately 10 ms; generates the velocity reference.",
@@ -81,19 +81,18 @@ const arm = {
     "PWM output connects the STM32 firmware to the H-Bridge motor driver.",
   ],
   testing: [
-    "Used MATLAB / Simulink for PID validation and tuning.",
-    "Tuned the control system on hardware and used UART telemetry to inspect behaviour.",
-    "Used ST-Link and a logic analyzer for hardware and firmware debugging.",
+    "The team's MATLAB / Simulink model evaluated the cascade PID structure before hardware testing.",
+    "The report documents a hardware test and tuning plan, not completed hardware results.",
   ],
   results: [
-    "Implemented timer-driven cascade control, PWM motor control and UART telemetry.",
-    "Brought together embedded firmware, control engineering, electronics and hardware tuning.",
-    "Measured settling time, overshoot and position error are not provided; no numerical performance claim is made.",
+    "Documented the timer-driven cascade-control design, PWM motor interface and UART telemetry plan.",
+    "The report includes a pre-hardware Simulink model and simulated responses.",
+    "Measured hardware settling time, overshoot and position error are not provided.",
   ],
   lessons: [
     "A control algorithm needs a predictable execution schedule on the microcontroller.",
-    "Saturation, motor dead-band and signal filtering affect practical controller behaviour.",
-    "Simulation, telemetry and hardware debugging provide complementary views of the same system.",
+    "Integral clamping and output limits are part of the documented cascade-control design.",
+    "Simulation needs to be followed by hardware telemetry and testing before drawing performance conclusions.",
   ],
 };
 const yutpa = {
@@ -207,7 +206,7 @@ export const projects: Project[] = [
         ],
         items: [
           "Cascade control for altitude and vertical-velocity behavior, with hover feed-forward and tilt compensation.",
-          "Anti-windup and filtering to handle controller state and noisy signals.",
+          "Integral clamping (anti-windup) in the active altitude and vertical-velocity controller.",
           "Output limits and slew-rate limiting to bound command changes.",
         ],
       },
@@ -268,7 +267,7 @@ export const projects: Project[] = [
     period: "Engineering project",
     context: "STM32-based robot arm · Firmware, control and electronics",
     summary:
-      "Real-time cascade PID control on STM32, connecting embedded firmware, drive electronics and hardware testing.",
+      "Timer-based cascade PID architecture for STM32F446RE, with L298N motor-drive design and pre-hardware Simulink evidence.",
     technologies: [
       "STM32F446RE",
       "Embedded C",
@@ -278,9 +277,7 @@ export const projects: Project[] = [
       "PWM",
       "UART",
       "Timers / interrupts",
-      "H-Bridge",
-      "ST-Link",
-      "Logic Analyzer",
+      "L298N",
     ],
     featured: true,
     diagram: "control",
@@ -289,7 +286,7 @@ export const projects: Project[] = [
       {
         title: "Overview",
         paragraphs: [
-          "A robot-arm position-control project combining embedded firmware, control engineering, drive electronics and hardware testing. I led the embedded software implementation on the STM32F446RE.",
+          "A robot-arm position-control design combining STM32 firmware architecture, cascaded control and L298N motor-drive electronics. I led the STM32 software architecture and peripheral configuration work documented in the early project report.",
         ],
       },
       { title: "Engineering Problem", paragraphs: [arm.problem] },
@@ -297,26 +294,26 @@ export const projects: Project[] = [
       {
         title: "Embedded Architecture",
         paragraphs: [
-          "Implemented the controller in Embedded C using STM32 HAL. Timer interrupts provided the execution schedule, PWM drove the motor-control output, and UART carried telemetry for inspection and tuning.",
+          "The STM32 HAL design assigns the 1 ms speed loop to TIM6 and the 10 ms position loop to TIM7. TIM1 provides PWM motor output, TIM3 reads the quadrature encoder, and UART is specified for telemetry and debugging.",
         ],
       },
       {
         title: "Electronics",
         paragraphs: [
-          "The STM32F446RE firmware used PWM motor control with an L298N motor driver and quadrature encoder feedback. Timer-based cascaded position and velocity loops generated the motor commands.",
+          "The documented hardware design pairs the STM32F446RE with an L298N motor driver and quadrature encoder feedback. The cascaded position and velocity loops specify PWM and direction commands for the motor.",
         ],
       },
       {
-        title: "Implementation",
+        title: "Firmware Design",
         items: [
-          "Implemented real-time cascade control with separate position and velocity loops.",
-          "Applied anti-windup and derivative filtering.",
-          "Used PWM dead-band handling and output limiting.",
-          "Integrated timer interrupts, PWM output and UART telemetry.",
+          "Specified separate position and speed loops on timer interrupts.",
+          "Documented integral clamping for anti-windup in the cascade PID design.",
+          "Defined PWM and direction output through the L298N motor driver.",
+          "Configured the timer and peripheral architecture for encoder, PWM and UART interfaces.",
         ],
       },
-      { title: "Testing & Tuning", items: arm.testing },
-      { title: "Results", items: arm.results },
+        { title: "Simulation & Test Plan", items: arm.testing },
+        { title: "Documented Outcomes", items: arm.results },
       { title: "What I Learned", items: arm.lessons },
     ],
     mediaDirectory: "robot-arm",
@@ -391,7 +388,7 @@ export const projects: Project[] = [
       {
         title: "Simulation",
         paragraphs: [
-          "Used ArduPilot SITL and simulation tools to develop and test mission software. Gazebo and Mission Planner were part of the workflow. Simulation screenshots and mission records will be added as evidence.",
+          "Used ArduPilot SITL and simulation tools to develop and test mission software. Gazebo and Mission Planner were part of the workflow.",
         ],
       },
       { title: "Testing", items: yutpa.testing },
@@ -399,6 +396,12 @@ export const projects: Project[] = [
     ],
     mediaDirectory: "yutpa",
     media: [
+      {
+        label: "YUTPA UAV during field testing.",
+        kind: "image",
+        src: "projects/yutpa/yutpa-field-test.jpg",
+        alt: "YUTPA UAV on the ground during field testing.",
+      },
       {
         label: "Verified Mission 1 geometry and AUTO sequence for the dynamically generated horizontal figure-8 route.",
         kind: "image",

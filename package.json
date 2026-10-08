@@ -7,6 +7,7 @@
     "dev": "astro dev --host 127.0.0.1",
     "check": "astro check",
     "build": "astro build",
+    "export:pdf": "node scripts/export-portfolio-pdf.mjs",
     "preview": "astro preview --host 127.0.0.1",
     "validate": "node scripts/validate.mjs"
   },
