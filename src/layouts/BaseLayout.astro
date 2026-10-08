@@ -3,9 +3,9 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { site, url } from '../data/site';
-interface Props { title?: string; description?: string; }
-const {title = 'Mahmoud Moftah | Embedded Systems & Autonomous Systems', description = site.description} = Astro.props;
+interface Props { title?: string; description?: string; bodyClass?: string; }
+const {title = 'Mahmoud Moftah | Embedded Systems & Autonomous Systems', description = site.description, bodyClass} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#101414"/><title>{title}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/><link rel="icon" type="image/svg+xml" href={url('favicon.svg')}/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:site_name" content="Mahmoud Moftah · Engineering Portfolio"/><meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/></head><body><a class="skip-link" href="#main">Skip to content</a><Navbar/><main id="main"><slot/></main><Footer/></body></html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#101414"/><title>{title}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/><link rel="icon" type="image/svg+xml" href={url('favicon.svg')}/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:site_name" content="Mahmoud Moftah · Engineering Portfolio"/><meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/></head><body class={bodyClass}><a class="skip-link" href="#main">Skip to content</a><Navbar/><main id="main"><slot/></main><Footer/></body></html>
