@@ -3,51 +3,6 @@ import type {ProjectMedia} from '../data/projects';
 import {url} from '../data/site';
 interface Props { media:ProjectMedia; directory:string }
 const {media} = Astro.props;
+const isPhoto = media.kind === 'image' && /\.jpe?g$/i.test(media.src || '');
 ---
-<figure class:list={['media-item', media.wide && 'media-item-wide']}>{media.src ? (media.kind === 'video' ? <video controls preload="metadata" src={url(media.src)} aria-label={media.label}><track kind="captions"/></video> : media.kind === 'image' ? <div class:list={['media-image-frame', media.wide && 'media-image-scroll']}><img src={url(media.src)} alt={media.alt || media.label} loading="lazy" width={media.wide ? 2700 : 960} height={media.wide ? 880 : 600}/></div> : <a class="button button-secondary" href={url(media.src)} download>Download {media.label}</a>) : <div class="media-placeholder"><span class="placeholder-plus" aria-hidden="true">+</span><strong>{media.label}</strong><span>TODO · {media.kind === 'video' ? 'Video' : media.kind === 'document' ? 'Test records' : 'Original media'} to be added</span></div>}<figcaption>{media.src ? media.label : `Reserved for verified project ${media.kind === 'document' ? 'records' : 'media'}`}</figcaption></figure>
-
-<style>
-  .media-item-wide {
-    grid-column: 1 / -1;
-  }
-
-  .media-image-frame {
-    min-width: 0;
-  }
-
-  .media-image-scroll {
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    padding-bottom: 8px;
-  }
-
-  .media-image-scroll img {
-    width: 1000px;
-    min-width: 100%;
-    max-width: none;
-  }
-
-  @media (min-width: 1101px) {
-    .media-item-wide {
-      width: calc(100% + 305px);
-      margin-left: -305px;
-    }
-
-    .media-image-scroll {
-      overflow-x: visible;
-    }
-
-    .media-image-scroll img {
-      width: 100%;
-      min-width: 0;
-      max-width: 100%;
-    }
-  }
-
-  @media (min-width: 801px) and (max-width: 1100px) {
-    .media-item-wide {
-      width: calc(100% + 245px);
-      margin-left: -245px;
-    }
-  }
-</style>
+<figure class:list={['media-item', media.wide && 'media-item-wide', isPhoto && 'media-item-photo']}>{media.src ? (media.kind === 'video' ? <video controls preload="metadata" src={url(media.src)} aria-label={media.label}><track kind="captions"/></video> : media.kind === 'image' ? <div class:list={['media-image-frame', media.wide && 'media-image-scroll']}><img src={url(media.src)} alt={media.alt || media.label} loading="lazy" width={media.wide ? 2700 : 960} height={media.wide ? 880 : 600}/></div> : <a class="button button-secondary" href={url(media.src)} download>Download {media.label}</a>) : <div class="media-placeholder"><span class="placeholder-plus" aria-hidden="true">+</span><strong>{media.label}</strong><span>TODO · {media.kind === 'video' ? 'Video' : media.kind === 'document' ? 'Test records' : 'Original media'} to be added</span></div>}<figcaption>{media.src ? media.label : `Reserved for verified project ${media.kind === 'document' ? 'records' : 'media'}`}</figcaption></figure>
