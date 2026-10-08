@@ -1,9 +1,119 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactCTA from '../components/ContactCTA.astro';
-import ExperienceItem from '../components/ExperienceItem.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import TechBadge from '../components/TechBadge.astro';
-import {experience} from '../data/experience';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import {site, url} from '../data/site';
 ---
-<BaseLayout title="About Mahmoud Moftah | Mechatronics Engineering Student" description="Mechatronics Engineering student at SUBÜ, developing embedded systems, control software and autonomous UAV systems. Expected graduation July 2027."><header class="shell page-hero"><p class="eyebrow">ABOUT / MAHMOUD MOFTAH MOHAMED</p><h1>Where software meets<br/><span class="accent-text">the physical world.</span></h1><p class="page-intro">Mechatronics Engineering student at Sakarya University of Applied Sciences, interested in the intersection of embedded systems, control theory and autonomous machines.</p></header><section class="shell about-layout"><div class="prose"><h2>An engineering perspective.</h2><p>My strongest practical experience comes from UAV projects, where software interacts with real hardware, sensors, flight controllers and safety constraints. I work on embedded firmware, guidance and control, autonomous mission logic and system integration.</p><p>I’m interested in engineering for aerospace, autonomous systems, robotics and defense technologies. I’m looking to contribute to teams where careful implementation and testing matter as much as the algorithm itself.</p><p>I actively develop my knowledge of Embedded Linux, PCB design, C / C++ and real-time embedded systems. These remain learning directions alongside my hands-on project work.</p><h3>Roles I’m interested in</h3><div class="badges">{['Embedded Systems','Flight Control','Guidance / Navigation','Autonomous Systems','Robotics'].map(label=><TechBadge label={label}/>)}</div></div><aside class="about-facts"><p class="eyebrow">AT A GLANCE</p><dl><dt>STUDYING</dt><dd>B.Sc. Mechatronics Engineering</dd><dt>UNIVERSITY</dt><dd>Sakarya University of Applied Sciences — SUBÜ</dd><dt>LOCATION</dt><dd>Sakarya, Türkiye</dd><dt>EXPECTED GRADUATION</dt><dd>July 2027</dd></dl></aside></section><section class="shell section" id="experience"><SectionHeading label="EXPERIENCE" title="Built with a team."/>{experience.map(item=><ExperienceItem item={item}/>)}</section><ContactCTA/></BaseLayout>
+<BaseLayout title="About Mahmoud Moftah | Mechatronics Engineering Student" description="Mechatronics Engineering student at SUBÜ, developing embedded systems, control software and autonomous UAV systems. Expected graduation July 2027.">
+  <header class="shell about-hero">
+    <div class="about-content">
+      <figure class="about-photo">
+        <img src={url('images/about-conference.jpg')} alt="Mahmoud Moftah at the TEKNOFEST 2026 Fighter UAV event area." width="4032" height="3024"/>
+      </figure>
+      <div class="about-introduction">
+        <p class="eyebrow">About Mahmoud Moftah</p>
+        <h1>I’m drawn to engineering where control software meets real hardware.</h1>
+        <div class="about-copy">
+          <p>My strongest practical experience comes from UAV and embedded-control projects, where software interacts with real hardware, sensors, flight controllers and safety constraints. My project work covers embedded firmware, guidance and control, autonomous mission logic and system integration.</p>
+          <p>I’m interested in aerospace, autonomous systems, robotics and defense technologies. I value careful implementation and testing as much as the algorithm itself, while continuing to develop my knowledge of Embedded Linux, PCB design, C / C++ and real-time embedded systems.</p>
+        </div>
+        <div class="about-action">
+          <Button href={`mailto:${site.email}`}><Icon name="mail" size={18}/>Email Mahmoud</Button>
+        </div>
+      </div>
+    </div>
+  </header>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-block: 48px 72px;
+  }
+
+  .about-content {
+    width: min(100%, 1080px);
+    margin-inline: auto;
+  }
+
+  .about-introduction {
+    min-width: 0;
+    max-width: 900px;
+    margin-top: 44px;
+  }
+
+  .about-introduction h1 {
+    max-width: 820px;
+    margin-top: 20px;
+    font-size: clamp(2.65rem, 4.7vw, 4.2rem);
+    line-height: 1.12;
+    letter-spacing: -0.018em;
+  }
+
+  .about-copy {
+    max-width: 720px;
+    margin-top: 29px;
+  }
+
+  .about-copy p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .about-copy p + p {
+    margin-top: 18px;
+  }
+
+  .about-action {
+    margin-top: 29px;
+  }
+
+  .about-photo {
+    margin: 0;
+  }
+
+  .about-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 900px) {
+    .about-hero {
+      padding-block: 40px 58px;
+    }
+
+    .about-introduction {
+      margin-top: 36px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about-hero {
+      padding-block: 30px 48px;
+    }
+
+    .about-introduction {
+      margin-top: 28px;
+    }
+
+    .about-introduction h1 {
+      margin-top: 17px;
+      font-size: 2.125rem;
+      line-height: 1.18;
+    }
+
+    .about-copy {
+      margin-top: 24px;
+    }
+
+    .about-copy p {
+      line-height: 1.78;
+    }
+
+    .about-action {
+      margin-top: 25px;
+    }
+  }
+</style>
